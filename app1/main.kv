@@ -1,0 +1,13 @@
+<Container>:
+    display: display
+    rows: 1
+    BoxLayout:
+        orientation: "vertical"
+        AddButton:
+            on_release: root.add_one()
+        SubstractButton:
+            on_release: root.substract_one()
+    Label:
+        id: display
+        font_size: dp(50)
+        text: '0'
