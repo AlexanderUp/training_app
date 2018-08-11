@@ -3,8 +3,26 @@
 # screen manager
 
 from kivy.app import App
+from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 
+# Builder.load_string("""
+# <MenuScreen>:
+#     BoxLayout:
+#         Button:
+#             text: 'Goto settings'
+#             on_press: root.manager.current = 'settings'
+#         Button:
+#             text: 'Quit'
+#
+# <SettingsScreen>:
+#     BoxLayout:
+#         Button:
+#             text: 'My settings button'
+#         Button:
+#             text: 'Back to menu'
+#             on_press: root.manager.current = 'menu'
+# """)
 
 class MenuScreen(Screen):
     pass
@@ -20,7 +38,11 @@ sm.add_widget(SettingsScreen(name='settings'))
 class TestApp(App):
 
     def build(self):
+        # sm.current = 'menu'
+        Builder.load_file('test.kv')
         return sm
+        # menu = MenuScreen()
+        # return menu
 
 
 if __name__ == '__main__':
