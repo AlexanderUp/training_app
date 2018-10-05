@@ -7,7 +7,7 @@ from kivy.app import App
 from kivy.uix.button import Button
 
 from kivy.config import Config
-Config.set('graphics', 'width', '288')
+Config.set('graphics', 'height', '288')
 Config.set('graphics', 'width', '512')
 
 # class TranslatorApp(App):
