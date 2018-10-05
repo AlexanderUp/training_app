@@ -4,19 +4,57 @@
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.widget import Widget
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.properties import NumericProperty
+from kivy.graphics import Color
 
-class Calc(GridLayout):
+from kivy.config import Config
+Config.set('graphics', 'height', '288')
+Config.set('graphics', 'width', '512')
+# Config.set('graphics', 'resizable', '0')
+
+class RootWidget(BoxLayout):
+    pass
+
+
+# class CustomLayout(AnchorLayout):
+#
+#     # def __init__(self, my_text, colors, **kwargs):
+#     def __init__(self, my_text, **kwargs):
+#         super(CustomLayout, self).__init__(**kwargs)
+#         self.height = 40
+#         self.anchor_x = 'center'
+#         self.anchor_y = 'top'
+#         self.my_text = my_text
+#         # self.a, self.b, self.c, self.mode = colors
+#         # with self.canvas.before:
+#         #     Color(self.a, self.b, self.c, mode=self.mode)
+#         self.add_widget(Label(text=self.my_text, size_hint=(1.0, None)))
+
+
+# class CustomLayout(BoxLayout):
+#
+#     def __init__(self, my_text, **kwargs):
+#         super(BoxLayout, self).__init__(**kwargs)
+#         self.height = 40
+#         self.my_text = my_text
+#         self.add_widget(Label(text='Total number of days between dates is:', size_hint=(1.0, None)))
+#         self.add_widget(Label(text=self.my_text, size_hint=(1.0, None)))
+
+
+class MainLayout(GridLayout):
 
     def __init__(self, **kwargs):
-        super(Calc, self).__init__(**kwargs)
+        super(MainLayout, self).__init__(**kwargs)
         self.cols = 4
-        self.rows = 3
+        self.rows = 4
         self.height = 40
+        self.days = 'DAYS'
         self.add_widget(Label(text='*****', size_hint=(.25, None)))
         self.add_widget(Label(text='Day', size_hint=(.25, None)))
         self.add_widget(Label(text='Month', size_hint=(.25, None)))
@@ -35,14 +73,24 @@ class Calc(GridLayout):
         self.add_widget(self.day2)
         self.add_widget(self.month2)
         self.add_widget(self.year2)
-        # self.add_widget(Label(text='Total days', size_hint=(1.0, None)))
+        self.add_widget(Label(text='*****', size_hint=(.25, None)))
+        self.add_widget(Label(text='Total days:', size_hint=(.25, None)))
+        self.add_widget(Label(text=self.days, size_hint=(.25, None)))
+        self.add_widget(Label(text='*****', size_hint=(.25, None)))
 
 
 class DayCalcApp(App):
 
     def build(self):
         self.title = 'Date calculator'
-        return Calc()
+        root = RootWidget(orientation='vertical')
+        a = MainLayout()
+        # b = CustomLayout(my_text='Total number of days between dates is:')
+        # c = CustomLayout(orientation='vertical', my_text='NUMBER')
+        root.add_widget(a)
+        # root.add_widget(b)
+        # root.add_widget(c)
+        return root
 
 
 if __name__ == '__main__':
