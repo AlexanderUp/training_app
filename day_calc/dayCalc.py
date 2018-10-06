@@ -11,12 +11,22 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.properties import NumericProperty
+form kivy.properties import DictProperty
 from kivy.graphics import Color
 
 from kivy.config import Config
 Config.set('graphics', 'height', '288')
 Config.set('graphics', 'width', '512')
 # Config.set('graphics', 'resizable', '0')
+import sys
+
+try:
+    from calendar_class import LeapCalendar
+except ImportError:
+    print('Can\'t import module LeapCalendar')
+    sys.exit()
+else:
+    print('Import successfull!')
 
 class RootWidget(BoxLayout):
     pass
@@ -48,6 +58,9 @@ class RootWidget(BoxLayout):
 
 
 class MainLayout(GridLayout):
+
+    # {'day1':int, 'month1':int, 'year1':int, 'day2':int, 'month2':int, 'year2':int}
+    input_data = DictProperty({'day1':0, 'month1':0, 'year1':0, 'day2':0, 'month2':0, 'year2':0})
 
     def __init__(self, **kwargs):
         super(MainLayout, self).__init__(**kwargs)
