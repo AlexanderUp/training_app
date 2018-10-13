@@ -9,40 +9,45 @@ from kivy.uix.textinput import TextInput
 from kivy.properties import StringProperty
 
 
-# class CustomWidget(BoxLayout):
-#     pass
-
-    # def __init__(self, **kvargs):
-    #     super(BoxLayout, self).__init__(**kvargs)
-    #     self.orientation = 'vertical'
-    #     self.add_widget(Label(text='my text', size_hint=(.5, 1)))
-    #     self.add_widget(TextInput(multiline=False , size_hint=(.5, 1)))
-
-
 class TextApp(App):
 
-    # content = StringProperty('')
-    content = ''
+    # content1 = StringProperty('Content 1')
+    # content2 = StringProperty('Content 2')
 
     def build(self):
         self.title = 'TextInput test app'
-        root = GridLayout(cols=2, rows=2)
-        l1 = Label(text='Input field', size_hint=(.5, .5))
-        t = TextInput(multiline=False, size_hint=(.5, .5))
-        l2 = Label(text='Text got:', size_hint=(.5, .5))
-        l3 = Label(text='default', size_hint=(.5, .5))
-        root.add_widget(l1)
-        root.add_widget(t)
-        root.add_widget(l2)
-        root.add_widget(l3)
-        t.bind(text=self.on_text)
+        root = GridLayout(cols=2)
+        self.l1 = Label(text='Input field', size_hint_x=.5)
+        self.t1 = TextInput(multiline=False, size_hint_x=.5)
+        self.l2 = Label(text='Input field 2', size_hint_x=.5)
+        self.t2 = TextInput(multiline=False, size_hint_x=.5)
+        # l3 = Label(text=self.content1)
+        # l4 = Label(text=self.content2)
+        self.l3 = Label(text='Content 1')
+        self.l4 = Label(text='Content 2')
+        root.add_widget(self.l1)
+        root.add_widget(self.t1)
+        root.add_widget(self.l2)
+        root.add_widget(self.t2)
+        root.add_widget(self.l3)
+        root.add_widget(self.l4)
+        # t1.bind(text=self.on_text)
+        # t2.bind(text=self.on_text)
+        self.t1.bind(text=self.label3_update)
+        self.t2.bind(text=self.label4_update)
+        print(root.__dict__)
         return root
 
-    def on_text(self, instance, value):
-        print('the widget {} have: {}'.format(instance, value))
-        self.content = value
-        print('value stored is: {}'.format(self.content))
+    # def on_text(self, instance, value):
+    #     print('the widget {} have: {}'.format(str(instance)[-15:-1], value))
 
+    def label3_update(self, instance, value):
+        print('the widget {} have: {}'.format(str(instance)[-15:-1], value))
+        self.l3.text = value
+
+    def label4_update(self, instance, value):
+        print('the widget {} have: {}'.format(str(instance)[-15:-1], value))
+        self.l4.text = value
 
 
 
