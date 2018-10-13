@@ -11,9 +11,6 @@ from kivy.properties import StringProperty
 
 class TextApp(App):
 
-    # content1 = StringProperty('Content 1')
-    # content2 = StringProperty('Content 2')
-
     def build(self):
         self.title = 'TextInput test app'
         root = GridLayout(cols=2)
@@ -21,10 +18,8 @@ class TextApp(App):
         self.t1 = TextInput(multiline=False, size_hint_x=.5)
         self.l2 = Label(text='Input field 2', size_hint_x=.5)
         self.t2 = TextInput(multiline=False, size_hint_x=.5)
-        # l3 = Label(text=self.content1)
-        # l4 = Label(text=self.content2)
-        self.l3 = Label(text='Content 1')
-        self.l4 = Label(text='Content 2')
+        self.l3 = Label()
+        self.l4 = Label()
         root.add_widget(self.l1)
         root.add_widget(self.t1)
         root.add_widget(self.l2)
@@ -35,7 +30,7 @@ class TextApp(App):
         # t2.bind(text=self.on_text)
         self.t1.bind(text=self.label3_update)
         self.t2.bind(text=self.label4_update)
-        print(root.__dict__)
+        # print(root.__dict__)
         return root
 
     # def on_text(self, instance, value):
@@ -43,11 +38,17 @@ class TextApp(App):
 
     def label3_update(self, instance, value):
         print('the widget {} have: {}'.format(str(instance)[-15:-1], value))
-        self.l3.text = value
+        if value:
+            self.l3.text = value
+        else:
+            self.l3.text = 'Content 1'
 
     def label4_update(self, instance, value):
         print('the widget {} have: {}'.format(str(instance)[-15:-1], value))
-        self.l4.text = value
+        if value:
+            self.l4.text = value
+        else:
+            self.l4.text = 'Content 2'
 
 
 
