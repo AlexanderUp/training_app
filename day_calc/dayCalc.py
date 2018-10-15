@@ -39,7 +39,6 @@ class MainLayout(BoxLayout):
     def calculate_dates(self, *args,  **kwargs):
         print('Args recieved: {}'.format(*args))
         print('Kwargs recieved: {}'.format(kwargs))
-        # self.cal = LeapCalendar()
         dates = [self.inpl.year1.text, self.inpl.month1.text, self.inpl.day1.text, self.inpl.year2.text, self.inpl.month2.text, self.inpl.day2.text]
         try:
             dates = [int(date) for date in dates]
@@ -49,13 +48,16 @@ class MainLayout(BoxLayout):
             sys.exit()
         else:
             print('Dates inputed: {}'.format(dates))
-            if not self.validate(dates[:3]) or not self.validate(dates[3:]):
+            if not self.validate(dates[:3]) or not self.validate(dates[3:]) or dates[0] > dates[3]:
                 print('Incorrect dates!!')
                 self.inpl.days_label.text = 'Incorrect dates!!'
                 return
             else:
                 print('Correct input!')
         self.inpl.days_label.text = str(self.cal.daysBetweenDates(*dates)) + ' days'
+
+    def clear(self):
+        pass
 
     def validate(self, date):
         # date is represented as list [year, month, day]
