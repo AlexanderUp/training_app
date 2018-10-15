@@ -39,6 +39,7 @@ class MainLayout(BoxLayout):
     def calculate_dates(self, *args,  **kwargs):
         print('Args recieved: {}'.format(*args))
         print('Kwargs recieved: {}'.format(kwargs))
+        # self.cal = LeapCalendar()
         dates = [self.inpl.year1.text, self.inpl.month1.text, self.inpl.day1.text, self.inpl.year2.text, self.inpl.month2.text, self.inpl.day2.text]
         try:
             dates = [int(date) for date in dates]

@@ -21,7 +21,6 @@ class LoginScreen(GridLayout):
 class MyApp(App):
 
     def build(self):
-        # return Label(text='Hello world')
         return LoginScreen()
 
 if __name__ == '__main__':
