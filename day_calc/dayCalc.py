@@ -34,6 +34,7 @@ class MainLayout(BoxLayout):
         self.inpl = InputLayout()
         self.cal = LeapCalendar()
         self.add_widget(self.inpl)
+        self.add_widget(Button(text='Clear', on_press=self.clear, size_hint=(1, 0.2)))
         self.add_widget(Button(text='Calculate', on_press=self.calculate_dates, size_hint=(1, 0.2)))
 
     def calculate_dates(self, *args,  **kwargs):
@@ -44,8 +45,10 @@ class MainLayout(BoxLayout):
             dates = [int(date) for date in dates]
         except ValueError:
             print('Wrong date inputed!')
-            print('Exiting....')
-            sys.exit()
+            # print('Exiting....')
+            # sys.exit()
+            self.inpl.days_label.text = 'Wrong date inputed!'
+            return None
         else:
             print('Dates inputed: {}'.format(dates))
             if not self.validate(dates[:3]) or not self.validate(dates[3:]) or dates[0] > dates[3]:
@@ -56,16 +59,22 @@ class MainLayout(BoxLayout):
                 print('Correct input!')
         self.inpl.days_label.text = str(self.cal.daysBetweenDates(*dates)) + ' days'
 
-    def clear(self):
-        pass
+    def clear(self, *args):
+        print('Args received: {}'.format(*args))
+        self.inpl.day1.text = ''
+        self.inpl.month1.text = ''
+        self.inpl.year1.text = ''
+        self.inpl.day2.text = ''
+        self.inpl.month2.text = ''
+        self.inpl.year2.text = ''
 
     def validate(self, date):
         # date is represented as list [year, month, day]
         if all(d > 0 for d in date):
             if self.cal.is_leap(date[0]):
-                daysOfMonths = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+                daysOfMonths = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
             else:
-                daysOfMonths = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+                daysOfMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
             if date[1] > 0 and date[1] <= 12:
                 if date[2] > 0 and date[2] <= daysOfMonths[date[1]-1]:
                     return True
