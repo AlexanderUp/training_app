@@ -1,0 +1,7 @@
+Road map
+
+Button 'Include last day' to be added.
+
+Button 'Today' for last date to be added.
+
+Functionality for calculating dates with number of days passed since / left to specified date to be added.
