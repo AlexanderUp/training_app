@@ -20,7 +20,7 @@ class EntropyCalculator():
             res.append(len(pswd[1:8])*2) # next 7 symbols (2 bits per symbol)
             res.append(len(pswd[8:20])*1.5) # from 9th to 20th symbols (1.5 bits per symbol)
             res.append(len(pswd[20:])) # from 21st symbols (1 bit per symbol)
-            if any([ch in ascii_uppercase and ch in punctuation for ch in pswd]):
+            if any([ch in ascii_uppercase or ch in punctuation for ch in pswd]):
                 res.append(6) # 6 bit for any non-alphabet symbol or uppercase letter
             return sum(res)
         return 0
@@ -41,7 +41,7 @@ class EntropyCalculator():
         punct = [ch in punctuation for ch in p]
         print('Upper: {}'.format(upper))
         print('Punctuation: {}'.format(punct))
-        if any(upper) and any(punct):
+        if any(upper) or any(punct):
             return True
         return False
 
