@@ -32,13 +32,6 @@ else:
     print('Import successfull!')
 
 
-# DEBUG = '-d' in sys.args
-
-def debug_print(*argv):
-    if DEBUG:
-        print(argv)
-
-
 class MainLayout(BoxLayout):
 
     def __init__(self, **kwargs):
@@ -47,7 +40,6 @@ class MainLayout(BoxLayout):
         self.inpl = InputLayout()
         self.cal = LeapCalendar()
         self.add_widget(self.inpl)
-        # self.last_day_checkbox = CheckBox(size_hint=(0.5, None))
         self.days_label = Label(text='Total days: 0 DAYS', size_hint=(0.2, None), pos_hint={'center_x':.5})
         self.add_widget(self.days_label)
         self.add_widget(Button(text='Clear', on_press=self.clear, size_hint=(1, 0.2)))
@@ -55,27 +47,32 @@ class MainLayout(BoxLayout):
 
         self.inpl.today_date1.bind(active=self.on_today_date1_active)
         self.inpl.today_date2.bind(active=self.on_today_date2_active)
+        self.inpl.last_day_checkbox.bind(active=self.on_last_day_checkbox_active)
 
 
     def calculate_dates(self, *args,  **kwargs):
-        print('Args recieved: {}'.format(*args))
+        print('Args recieved: {}'.format(args))
         print('Kwargs recieved: {}'.format(kwargs))
         dates = [self.inpl.year1.text, self.inpl.month1.text, self.inpl.day1.text, self.inpl.year2.text, self.inpl.month2.text, self.inpl.day2.text]
         try:
             dates = [int(date) for date in dates]
         except ValueError:
-            print('Wrong date inputed!')
-            self.days_label.text = 'Wrong date inputed!'
+            print('Wrong data inputed!')
+            self.days_label.text = 'Wrong data inputed!'
             return None
         else:
             print('Dates inputed: {}'.format(dates))
-            if not self.validate(dates[:3]) or not self.validate(dates[3:]) or dates[0] > dates[3]:
+            if self.validate(dates[:3]) and self.validate(dates[3:]) and self.validate_date_sequence(dates):
+                print('Correct dates!')
+                if self.inpl.last_day_checkbox.active:
+                    self.days_label.text = str(self.cal.daysBetweenDates(*dates) + 1) + ' days'
+                else:
+                    self.days_label.text = str(self.cal.daysBetweenDates(*dates)) + ' days'
+            else:
                 print('Incorrect dates!!')
                 self.days_label.text = 'Incorrect dates!!'
-                return
-            else:
-                print('Correct input!')
-        self.days_label.text = str(self.cal.daysBetweenDates(*dates)) + ' days'
+        return None
+
 
     def clear(self, *args):
         print('Args received: {}'.format(*args))
@@ -98,6 +95,14 @@ class MainLayout(BoxLayout):
                 daysOfMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
             if date[1] <= 12 and date[2] <= daysOfMonths[date[1]-1]:
                 return True
+        return False
+
+    def validate_date_sequence(self, dates):
+        print('Rcvd for validation: {}'.format(dates))
+        year1, month1, day1, year2, month2, day2 = dates
+        print('y1: {}, m1: {}, d1: {}, y2: {}, m2: {}, d2: {}'.format(year1, month1, day1, year2, month2, day2))
+        if (year1 < year2) or (year1 == year2 and month1 < month2) or (year1 == year2 and month1 == month2 and day1 <= day2):
+            return True
         return False
 
 
@@ -126,6 +131,10 @@ class MainLayout(BoxLayout):
             self.inpl.month2.text = ''
             self.inpl.year2.text = ''
         return None
+
+    def on_last_day_checkbox_active(self, checkbox, value, *args, **kwargs):
+        print('Rcvd: {}, value: {}'.format(checkbox, value))
+        self.calculate_dates(*args, **kwargs)
 
 
 class InputLayout(GridLayout):
@@ -160,6 +169,14 @@ class InputLayout(GridLayout):
         self.add_widget(self.year2)
         self.add_widget(self.today_date2)
         self.add_widget(Label(text='Today',size_hint=(.1, None)))
+        self.add_widget(Widget(size_hint=(.2, None)))
+        self.add_widget(Widget(size_hint=(.2, None)))
+        self.add_widget(Widget(size_hint=(.2, None)))
+        self.add_widget(Widget(size_hint=(.2, None)))
+        self.last_day_checkbox = CheckBox(size_hint=(.1, None))
+        self.last_day_label = Label(text='Include\nlast day', size_hint=(.1, None))
+        self.add_widget(self.last_day_checkbox)
+        self.add_widget(self.last_day_label)
 
 
 class DayCalcApp(App):
