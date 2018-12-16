@@ -40,7 +40,7 @@ class MainLayout(BoxLayout):
         self.inpl = InputLayout()
         self.cal = LeapCalendar()
         self.add_widget(self.inpl)
-        self.days_label = Label(text='Total days: 0 DAYS', size_hint=(0.2, None), pos_hint={'center_x':.5})
+        self.days_label = Label(text='Awaiting input', size_hint=(0.2, None), pos_hint={'center_x':.5})
         self.add_widget(self.days_label)
         self.add_widget(Button(text='Clear', on_press=self.clear, size_hint=(1, 0.2)))
         self.add_widget(Button(text='Calculate', on_press=self.calculate_dates, size_hint=(1, 0.2)))
@@ -64,10 +64,13 @@ class MainLayout(BoxLayout):
             print('Dates inputed: {}'.format(dates))
             if self.validate(dates[:3]) and self.validate(dates[3:]) and self.validate_date_sequence(dates):
                 print('Correct dates!')
+                total_days_between_dates = self.cal.daysBetweenDates(*dates)
                 if self.inpl.last_day_checkbox.active:
-                    self.days_label.text = str(self.cal.daysBetweenDates(*dates) + 1) + ' days'
+                    total_days_between_dates += 1
+                if total_days_between_dates != 1:
+                    self.days_label.text = str(total_days_between_dates) + ' days total'
                 else:
-                    self.days_label.text = str(self.cal.daysBetweenDates(*dates)) + ' days'
+                    self.days_label.text = 'Only one day total'
             else:
                 print('Incorrect dates!!')
                 self.days_label.text = 'Incorrect dates!!'
@@ -82,9 +85,9 @@ class MainLayout(BoxLayout):
         self.inpl.day2.text = ''
         self.inpl.month2.text = ''
         self.inpl.year2.text = ''
-        self.days_label.text = 'Total days: 0 DAYS'
-        self.inpl.today_date1.active=False
-        self.inpl.today_date2.active=False
+        self.days_label.text = '0 days total'
+        self.inpl.today_date1.active = False
+        self.inpl.today_date2.active = False
 
     def validate(self, date):
         # date is represented as list [year, month, day]
@@ -117,6 +120,7 @@ class MainLayout(BoxLayout):
             self.inpl.day1.text = ''
             self.inpl.month1.text = ''
             self.inpl.year1.text = ''
+            self.days_label.text = 'Awaiting input'
         return None
 
     def on_today_date2_active(self, checkbox, value):
@@ -130,11 +134,20 @@ class MainLayout(BoxLayout):
             self.inpl.day2.text = ''
             self.inpl.month2.text = ''
             self.inpl.year2.text = ''
+            self.days_label.text = 'Awaiting input'
         return None
 
     def on_last_day_checkbox_active(self, checkbox, value, *args, **kwargs):
         print('Rcvd: {}, value: {}'.format(checkbox, value))
-        self.calculate_dates(*args, **kwargs)
+        if value:
+            self.calculate_dates(*args, **kwargs)
+        else:
+            if all((self.inpl.day1.text, self.inpl.month1.text, self.inpl.year1.text, self.inpl.day2.text, self.inpl.month2.text, self.inpl.year2.text)):
+                self.calculate_dates(*args, **kwargs)
+            else:
+                self.days_label.text = '0 days total'
+        return None
+
 
 
 class InputLayout(GridLayout):
