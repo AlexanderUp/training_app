@@ -8,9 +8,4 @@ Road map for dayCalc kivy application.
 
 ** Functionality for calculating dates with number of days passed since / left to specified date to be added.
 
-** Code should be refactored! Logic should be separated from UI.
-
 ** DONE!!! 'Calculate' button to be deprecated.
-
-** In case of using 'today' check box and changing the date manually after it, 'tick' from check box should disappear.
-Note! Implementation postponed due to conflict in logic of using checkbox.
