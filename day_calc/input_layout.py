@@ -1,5 +1,5 @@
 # encoding:utf-8
-# input layouts for kivy framework application
+# input layout for kivy framework application
 # which calculate days between two dates with leap years been taken into account
 
 from kivy.uix.gridlayout import GridLayout
