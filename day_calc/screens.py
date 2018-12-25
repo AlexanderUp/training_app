@@ -38,4 +38,13 @@ class AddScreen(Screen):
 
     def __init__(self, *args, **kwargs):
         super(AddScreen, self).__init__(**kwargs)
-        self.add_widget(AddLayout())
+        add_screen = AddLayout()
+        self.add_widget(add_screen)
+        add_screen.bind(pos=self.update_rect, size=self.update_rect)
+        with add_screen.canvas.before:
+            Color(0.3, 0.5, 0.5, 1.0)
+            self.rect = Rectangle(size=add_screen.size, pos=add_screen.pos)
+
+    def update_rect(self, instance, value):
+        self.rect.pos = instance.pos
+        self.rect.size = instance.size

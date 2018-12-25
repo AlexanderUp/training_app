@@ -91,8 +91,8 @@ class MainLayout(BoxLayout):
         self.days_label.text = 'Awaiting input...'
 
     def on_today_date1(self, instance=None, value=None, *args, **kwargs):
-        print('Instance: {}'.format(instance))
-        print('Value: {}'.format(value))
+        # print('Instance: {}'.format(instance))
+        # print('Value: {}'.format(value))
         d = datetime.date.today()
         self.inpl.day1.text = str(d.day)
         self.inpl.month1.text = str(d.month)
@@ -100,8 +100,8 @@ class MainLayout(BoxLayout):
         return None
 
     def on_today_date2(self, instance=None, value=None, *args, **kwargs):
-        print('Instance: {}'.format(instance))
-        print('Value: {}'.format(value))
+        # print('Instance: {}'.format(instance))
+        # print('Value: {}'.format(value))
         d = datetime.date.today()
         self.inpl.day2.text = str(d.day)
         self.inpl.month2.text = str(d.month)
@@ -116,9 +116,10 @@ class MainLayout(BoxLayout):
             if all((self.inpl.day1.text, self.inpl.month1.text, self.inpl.year1.text, self.inpl.day2.text, self.inpl.month2.text, self.inpl.year2.text)):
                 self.calculate_dates()
             else:
-                self.days_label.text = '0 days total'
+                self.days_label.text = 'Awaiting input...'
         return None
 
+    # auxiliary method
     def checking(self, instance=None, value=None, *args, **kwargs):
         print('instance: {}'.format(instance))
         print('value: {}'.format(value))
