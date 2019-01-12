@@ -5,3 +5,5 @@ myvenv
 *.sqlite3
 /static
 .DS_Store
+*.profile
+*.db
