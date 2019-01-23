@@ -33,6 +33,7 @@
 
 import shelve
 import sys
+import random
 
 # directory = '/Users/alexanderuperenko/Desktop/Python - my projects/kivy-training/memowords'
 
@@ -54,7 +55,8 @@ class Dictionary():
         return None
 
     def show_dictionary(self):
-        return list((key, value) for key, value in self._dictionary.items())
+        # dictionary to be used, 'get method' required
+        return {key:item for key, item in self._dictionary.items()}
 
     def add_word(self, word, translation):
         if word and translation:
@@ -86,9 +88,23 @@ class Dictionary():
             print('{} successfully deleted.'.format(word))
         return None
 
+    # edit word or its translation
+    def edit_word(self, word, translation):
+        # should word with selection in recycleview
+        # print('Prepare to edit...')
+        pass
+
     def search_word(self, target):
-        res = [word for word in self._dictionary.keys() if word.startswith(target)]
-        return res
+        target = target.lower()
+        return {key:self._dictionary[key] for key in self._dictionary.keys() if key.startswith(target)}
+
+    def get_random_word(self):
+        # print('Type of self._dictionary: {}'.format(type(self._dictionary)))
+        keys = [key for key in self._dictionary.keys()]
+        # print('keys: {}'.format(keys))
+        random_word = random.choice(keys)
+        # print('Random word: {}'.format(random_word))
+        return random_word
 
     def close(self):
         self._dictionary.close()
@@ -98,3 +114,8 @@ class Dictionary():
         # consist of letters only
         # string.ascii_letters
         pass
+
+
+if __name__ == '__main__':
+    d = Dictionary('test-test')
+    d.get_random_word()

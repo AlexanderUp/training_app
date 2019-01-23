@@ -7,6 +7,7 @@ from menu_layout import MenuLayout
 from add_word_layout import AddWordLayout
 from dictionary_layout import DictionaryLayout
 from test_layout import TestLayout
+from edit_layout import EditLayout
 
 
 class MenuScreen(Screen):
@@ -35,3 +36,10 @@ class TestScreen(Screen):
     def __init__(self, *args, **kwargs):
         super(TestScreen, self).__init__(**kwargs)
         self.add_widget(TestLayout())
+
+
+class EditScreen(Screen):
+
+    def __init__(self, *args, **kwargs):
+        super(EditScreen, self).__init__(**kwargs)
+        self.add_widget(EditLayout())

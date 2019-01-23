@@ -50,6 +50,9 @@ class DictionaryTest(unittest.TestCase):
         self.assertEqual(self.d._dictionary[word][0], transOne)
         self.assertEqual(self.d._dictionary[word][1], transTwo)
 
+    def testWordDeletion(self):
+        pass
+
     def tearDown(self):
         try:
             os.remove(OUTPUT_FILE + '.db')

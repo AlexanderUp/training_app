@@ -35,10 +35,10 @@ class InputLayout(GridLayout):
         self.rows = 2
         self.height = config.HEIGHT * self.rows
         self.add_widget(Label(text='Enter word', size_hint=(.25, None), height=config.HEIGHT))
-        self.add_word = TextInput(multiline=False, size_hint=(.75, None), height=config.HEIGHT)
+        self.add_word = TextInput(hint_text='New word...', multiline=False, size_hint=(.75, None), height=config.HEIGHT)
         self.add_widget(self.add_word)
         self.add_widget(Label(text='Translation', size_hint=(.25, None), height=config.HEIGHT))
-        self.word_translation = TextInput(multiline=False, size_hint=(.75, None), height=config.HEIGHT)
+        self.word_translation = TextInput(hint_text='...and it\'s translation.', multiline=False, size_hint=(.75, None), height=config.HEIGHT)
         self.add_widget(self.word_translation)
 
 
