@@ -9,6 +9,7 @@ import class_dictionary
 
 # height for almost all widgets
 HEIGHT = 100 # some widgets (labels, etc) inherit their own heights
+RANDOM_WORD = None
 
 # screen manager
 sm = ScreenManager()

@@ -99,12 +99,13 @@ class Dictionary():
         return {key:self._dictionary[key] for key in self._dictionary.keys() if key.startswith(target)}
 
     def get_random_word(self):
+        ''' Returns tuple (random_word, self._dictionary[random_word]) '''
         # print('Type of self._dictionary: {}'.format(type(self._dictionary)))
         keys = [key for key in self._dictionary.keys()]
         # print('keys: {}'.format(keys))
         random_word = random.choice(keys)
         # print('Random word: {}'.format(random_word))
-        return random_word
+        return (random_word, self._dictionary[random_word])
 
     def close(self):
         self._dictionary.close()
@@ -118,4 +119,4 @@ class Dictionary():
 
 if __name__ == '__main__':
     d = Dictionary('test-test')
-    d.get_random_word()
+    print('Random_word tuple is {}'.format(d.get_random_word()))
