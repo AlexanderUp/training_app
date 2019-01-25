@@ -6,6 +6,7 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.widget import Widget
 from kivy.uix.textinput import TextInput
+from kivy.clock import Clock
 
 
 import config
@@ -55,10 +56,10 @@ class TestLayout(BoxLayout):
         self.random_word_label = Label(text='Press NEXT to start test', size_hint=(1.0, .8), font_size = 70)
         self.add_widget(self.random_word_label)
         self.result_layout = Label(text='Result', size_hint=(1.0, .2))
-        self.get_random_word()
         self.add_widget(self.result_layout)
         self.answer_layout = AnswerLayout(size_hint=(1.0, None))
         self.add_widget(self.answer_layout)
+        self.get_random_word()
 
         self.upper_bar_layout.btn_next.bind(on_press=self.get_random_word)
         self.upper_bar_layout.btn_next.bind(on_press=self.answer_layout.btn_clear_pressed)
@@ -71,10 +72,11 @@ class TestLayout(BoxLayout):
         print('Random word is {}'.format(config.RANDOM_WORD[0].upper()))
         # print('type of random_word: {}'.format(type(config.RANDOM_WORD[0])))
         self.random_word_label.text = config.RANDOM_WORD[0]
+        self.result_layout.text = 'Awaiting input...'
+        self.answer_layout.user_answer.text = ''
 
     def check_answer(self, *args, **kwargs):
         # config.print_args(args, kwargs)
         if self.answer_layout.user_answer.text in config.RANDOM_WORD[1]:
+            Clock.schedule_once(self.get_random_word, .5)
             self.result_layout.text = 'You are right!'
-        else:
-            self.result_layout.text = 'You are wrong:('
